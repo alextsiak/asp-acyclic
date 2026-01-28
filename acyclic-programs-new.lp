@@ -103,8 +103,8 @@ num_rules(S) :- S=#count{R: rule(R)}.
 body_size(N,R) :- rule(R), N=#count{A: body(R,S,A)}.
 p_body_size(T) :- T=#sum{N,R : body_size(N,R)}.
 
-#minimize{S@2,S: num_rules(S)}.
-#minimize{N@1,N: p_body_size(N)}.
+#minimize{S@2: num_rules(S)}.
+#minimize{N@1: p_body_size(N)}.
 
 
 
