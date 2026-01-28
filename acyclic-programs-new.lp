@@ -113,7 +113,7 @@ p_body_size(T) :- T=#sum{N,R : body_size(N,R)}.
 %% other constraints %%
 
 % it cannot be the case that when A is in the head of a rule, auxes smaller than A don't appear in the heads of previous rules
-:- aux(A), head(R1,A), aux(B), B<A, not head(R2, B), R2<R1, rule(R2), rule(R1).
+:- aux(A), head(R1,A), aux(B), B < A, #count { R2 : head(R2,B), R2 < R1 } = 0.
 
 % it cannot be the case that, when A is in the head of a rule, auxes smaller than A appear in the head of any subsequent rule
 :- aux(A), head(R1,A), aux(B), B<A, head(R2,B), R2>R1, rule(R2), rule(R1).
