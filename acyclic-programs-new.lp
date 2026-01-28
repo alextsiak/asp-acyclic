@@ -77,8 +77,7 @@ reachable(X,Y) :- edge(X,Z), reachable(Z,Y).
 % for each example, an attribute is true if the example has it
 true(E,A) :- has(E,A).
 
-% when are the literals in a body satisfied?
-% the other way - a body is NOT satisfied when one of the literals is violating it (is this even the right word)
+% a body is NOT satisfied when one of the literals is violating it (is this even the right word)
 
 violated(E,R) :- body(R,1,A), not true(E,A), example(E,_).
 violated(E,R) :- body(R,-1,A), true(E,A), example(E,_).
