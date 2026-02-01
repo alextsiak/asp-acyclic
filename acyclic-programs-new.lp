@@ -109,6 +109,26 @@ p_body_size(T) :- T=#sum{N,R : body_size(N,R)}.
 :- aux(A), head(R1,A), aux(B), B<A, head(R2,B), R2>R1, rule(R2), rule(R1).
 
 
+
+% symmetry constraint %
+
+% position(A,X): atom A has position X among all atoms in clingo's lexicographical order
+position(A,X) :- body(_,_,A), X = { B <= A : body(_,_,B) }.
+
+% every atom A in rule R has a lexicographic position X
+rule_pos(R,A,X) :- body(R,_,A), position(A,X).
+
+% the smallest atom X in each rule R
+min_pos(R,X) :- rule_pos(R,_,X), #count { Y : rule_pos(R,_,Y), Y<X } = 0.
+% this works if the smallest atom is unique for every rule, but not if two rules have the same smallest atom
+
+
+:- symmetry=1, head(R1,H), head(R2,H), R1 < R2, min_pos(R1,X1), min_pos(R2,X2), X1 > X2.
+
+
+
+
+
 #show head/2.
 #show body/3.
 %#show body_size/2.
